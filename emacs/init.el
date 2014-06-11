@@ -72,7 +72,7 @@
 ;; 矩形選択
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ; デフォルトキーバインドを無効化
-(define-key global-map (kbd "C-x SPC") 'cua-set-rectangle-mark)
+(define-key global-map (kbd "M-@") 'cua-set-rectangle-mark)
 
 ;; ウィンドウを移動
 (defun other-window-or-split ()
@@ -107,6 +107,7 @@
 ;; 候補のディレクトリが一つしかない場合に、自動的に展開しない
 (setq helm-ff-auto-update-initial-value nil)
 
+
 ;; プラグイン(ggtags)
 (add-hook 'ggtags-mode-hook
   (lambda ()
@@ -114,11 +115,12 @@
     (define-key ggtags-mode-map (kbd "M-r") 'ggtags-find-reference)
     (define-key ggtags-mode-map (kbd "M-s") 'ggtags-find-other-symbol)
     (define-key ggtags-mode-map (kbd "M-]") 'nil)
-    (define-key ggtags-mode-map (kbd "M-[") 'beginning-of-defun)
-    (define-key ggtags-mode-map (kbd "M-]") 'end-of-defun)
     (define-key ggtags-mode-map (kbd "C-^") 'pop-tag-mark)))
 
 ;; 起動時に ggtags を有効化
 (add-hook 'c-mode-common-hook
-          '(lambda()
-             (ggtags-mode 1)))
+  (lambda()
+  (define-key c-mode-map (kbd "M-[") 'c-beginning-of-defun)
+  (define-key c-mode-map (kbd "M-]") 'c-end-of-defun)
+  (ggtags-mode 1)))
+
